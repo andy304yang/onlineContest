@@ -1,0 +1,27 @@
+import request from '@/utils/request'
+
+export function tonobeJudge(tid) {
+  return request({
+    url: '/api/tonotbeJudge',
+    method: 'post',
+    params: {
+      tid: tid
+    }
+  })
+}
+
+// 检索
+export function getJudges(data) {
+  return request({
+    url: '/api/getJudgeMesByString',
+    method: 'post',
+    params: {
+      realname: data.realname,
+      username: data.username,
+      college: data.college,
+      school: data.school,
+      pageNum: data.page,
+      pageSize: data.limit
+    }
+  })
+}

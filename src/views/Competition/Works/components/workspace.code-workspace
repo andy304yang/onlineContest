@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\..\\..\\..\\..\\前端"
+		},
+		{
+			"path": "..\\..\\..\\..\\..\\.."
+		},
+		{
+			"path": "..\\..\\..\\..\\..\\..\\..\\property"
+		},
+		{
+			"path": "..\\..\\..\\..\\..\\..\\..\\newContent-element"
+		}
+	],
+	"settings": {
+		"vetur.validation.template": false,
+		"vetur.grammar.customBlocks": {
+			"docs": "md",
+			"i18n": "json"
+		}
+	}
+}

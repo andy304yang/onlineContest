@@ -1,0 +1,14 @@
+import request from '@/utils/request'
+
+export function returnNoscored(data) {
+  return request({
+    url: '/api/toTuiHuiPF',
+    method: 'post',
+    params: {
+      widList: data.wid,
+      subject: data.theme,
+      content: data.content
+    }
+  })
+}
+

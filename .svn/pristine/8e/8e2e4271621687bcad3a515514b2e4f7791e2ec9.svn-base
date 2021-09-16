@@ -1,0 +1,112 @@
+<template>
+  <div class="dashboard-editor-container">
+    <div class="flex-box">
+      <panel-group :message="message" />
+      <div class="right-box">
+        <div class="chart-wrapper">
+          <content-chart ref="content" :content="content" :contentvalue="contentvalue" />
+        </div>
+        <div class="chart-wrapper">
+          <bar-chart ref="bar" :first="first" :firstvalue="firstvalue" @change="change" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import PanelGroup from './components/PanelGroup'
+import BarChart from './components/BarChart'
+import ContentChart from './components/ContentChart'
+import { getMessageQue } from '@/api/dashboard'
+
+export default {
+  name: 'DashboardAdmin',
+  components: {
+    PanelGroup,
+    BarChart,
+    ContentChart
+  },
+  data() {
+    return {
+      message: {},
+      first: ['活动报道', '报名参赛', '在线分享', '协会介绍', '个人中心', '常见问题', '作品提交', '评委中心'],
+      firstvalue: [],
+      content: [],
+      contentvalue: [],
+      second: []
+    }
+  },
+  mounted() {
+    this.getMessage()
+  },
+  methods: {
+    getMessage() {
+      getMessageQue().then(res => {
+        this.message = res.obj
+        const len = this.message.contentvalue.length
+        const arr = new Array(6)
+        for (let i = 0; i < 6; i++) {
+          arr[i] = new Array(len)
+        }
+        for (let i = 0; i < 5; i++) {
+          for (let j = 0; j < len; j++) {
+            arr[i][j] = this.message.contentvalue[i][j] === 0 ? null : this.message.contentvalue[i][j]
+          }
+        }
+        this.contentvalue = arr
+        this.content = this.message.content
+        this.firstvalue = this.message.firstvalue
+        this.$nextTick(() => {
+          this.$refs.content.initChart()
+          this.$refs.bar.initChart()
+        })
+      })
+    },
+    change(dataIndex) {
+      this.$refs.pie.pieChange(dataIndex)
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.dashboard-editor-container {
+  padding: 32px;
+  background-color: rgb(240, 242, 245);
+  position: relative;
+
+  .github-corner {
+    position: absolute;
+    top: 0px;
+    border: 0;
+    right: 0;
+  }
+
+  .flex-box {
+    display: flex;
+  }
+
+  .left-box{
+    margin-right: 30px;
+  }
+
+  .right-box {
+    width: 100%;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    background: #fff;
+    padding: 16px 16px 0;
+    margin-bottom: 32px;
+    overflow: auto;
+  }
+}
+
+@media (max-width:1024px) {
+  .chart-wrapper {
+    padding: 8px;
+  }
+}
+</style>

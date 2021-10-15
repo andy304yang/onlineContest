@@ -514,7 +514,7 @@ export default {
       this.temp.pictures = []
       // 将后台给的url，转为File对象，否则上传时获取不到原有图片
       if (this.temp.image) {
-        const image = new Image()
+        var image = new Image()
         image.setAttribute('crossOrigin', 'Anonymous')
         image.onload = () => {
           const base64 = getBase64Image(image)
@@ -564,7 +564,7 @@ export default {
           } else if (tempData.now === '决赛') {
             tempData.now = '3'
           }
-          var id = parseInt(tempData.clubname)
+          var id = parseInt(tempData.club_id)
           const tempEventData = new FormData()
           tempEventData.append('mid', tempData.mid)
           tempEventData.append('name', tempData.name)
